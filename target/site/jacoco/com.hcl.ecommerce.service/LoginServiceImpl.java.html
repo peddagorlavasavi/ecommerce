@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LoginServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ecommerce</a> &gt; <a href="index.source.html" class="el_package">com.hcl.ecommerce.service</a> &gt; <span class="el_source">LoginServiceImpl.java</span></div><h1>LoginServiceImpl.java</h1><pre class="source lang-java linenums">package com.hcl.ecommerce.service;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.hcl.ecommerce.dto.LoginDto;
+import com.hcl.ecommerce.dto.LoginResponseDto;
+import com.hcl.ecommerce.entity.User;
+import com.hcl.ecommerce.repository.LoginRepository;
+
+/**
+ * @author Vasavi
+ *
+ */
+@Service
+<span class="fc" id="L18">public class LoginServiceImpl implements LoginService {</span>
+
+	/**
+	 *  The Constant log.
+	 */
+<span class="fc" id="L23">	private static final Logger logger = LoggerFactory.getLogger(LoginServiceImpl.class);</span>
+
+	/**
+	 * The loginRepository.
+	 */
+	@Autowired
+	LoginRepository loginRepository;
+
+	
+	/**
+	 *
+	 *@description this method is used for logging into the application.
+	 *@param logindto the loginDto which contains mobileNumber and password.
+	 *@return loginResponseDto.
+	 *
+	 *
+	 */
+	@Override
+	public LoginResponseDto login(LoginDto loginDto) {
+<span class="fc" id="L42">		logger.debug(&quot;LoginServiceImpl login()&quot;);</span>
+<span class="fc" id="L43">		LoginResponseDto loginResponseDto = null;</span>
+<span class="fc" id="L44">		User user = loginRepository.findByMobileNumberAndPassword(loginDto.getMobileNumber(), loginDto.getPassword());</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">		if (user != null) {</span>
+<span class="fc" id="L46">			loginResponseDto = new LoginResponseDto();</span>
+<span class="fc" id="L47">			loginResponseDto.setStatusCode(&quot;200&quot;);</span>
+<span class="fc" id="L48">			loginResponseDto.setStatusMessage(&quot;Login Successfully&quot;);</span>
+		}
+		else {
+<span class="fc" id="L51">			loginResponseDto = new LoginResponseDto();</span>
+<span class="fc" id="L52">			loginResponseDto.setStatusCode(&quot;401&quot;);</span>
+<span class="fc" id="L53">			loginResponseDto.setStatusMessage(&quot;Enter Valid MobileNo and Password&quot;);</span>
+		}
+<span class="fc" id="L55">		return loginResponseDto;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

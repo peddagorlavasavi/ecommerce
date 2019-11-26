@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StoreProductServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ecommerce</a> &gt; <a href="index.source.html" class="el_package">com.hcl.ecommerce.service</a> &gt; <span class="el_source">StoreProductServiceImpl.java</span></div><h1>StoreProductServiceImpl.java</h1><pre class="source lang-java linenums">package com.hcl.ecommerce.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.hcl.ecommerce.dto.ProductNameDto;
+import com.hcl.ecommerce.dto.ProductNameResponseDto;
+import com.hcl.ecommerce.dto.StoreProductDto;
+import com.hcl.ecommerce.dto.StoreProductResponseDto;
+import com.hcl.ecommerce.entity.StoreProduct;
+import com.hcl.ecommerce.repository.StoreProductRepository;
+
+/**
+ * @author Vasavi
+ *
+ */
+@Service
+<span class="fc" id="L24">public class StoreProductServiceImpl implements StoreProductService {</span>
+
+	/**
+	 * The Constant log.
+	 */
+<span class="fc" id="L29">	private static final Logger logger = LoggerFactory.getLogger(StoreProductServiceImpl.class);</span>
+	/**
+	 * The storeProductRepository.
+	 */
+	@Autowired
+	StoreProductRepository storeProductRepository;
+
+	/**
+	 *
+	 *@description this method is used for adding products into the application.
+	 * @param storeProductDto the storeProductDto which contains
+	 *                        storeId,productId,productName and productPrice.
+	 * @return storeProductResponseDto.
+	 *
+	 */
+	@Override
+	public StoreProductResponseDto saveProduct(StoreProductDto storeProductDto) {
+<span class="fc" id="L46">		logger.info(&quot;Inside of saveProduct() method&quot;);</span>
+<span class="fc" id="L47">		StoreProduct storeProduct = new StoreProduct();</span>
+<span class="fc" id="L48">		StoreProductResponseDto storeProductResponseDto = new StoreProductResponseDto();</span>
+<span class="fc" id="L49">		BeanUtils.copyProperties(storeProductDto, storeProduct);</span>
+<span class="fc" id="L50">		storeProductRepository.save(storeProduct);</span>
+<span class="fc" id="L51">		storeProductResponseDto.setStatusMessage(&quot;Success&quot;);</span>
+<span class="fc" id="L52">		storeProductResponseDto.setStatusCode(&quot;200&quot;);</span>
+<span class="fc" id="L53">		return storeProductResponseDto;</span>
+	}
+
+	/**
+	 *@description this method is used for searching the products based on the
+	 *              productName.
+	 * @param productNameDto the productNameDto which contains productName.
+	 * @return productNameResponseDto.
+	 *
+	 */
+	@Override
+	public List&lt;ProductNameResponseDto&gt; findByProductNameStartsWith(ProductNameDto productNameDto) {
+<span class="fc" id="L65">		List&lt;StoreProduct&gt; storeProducts = storeProductRepository</span>
+<span class="fc" id="L66">				.findByProductNameStartsWith(productNameDto.getProductName());</span>
+<span class="fc" id="L67">		List&lt;ProductNameResponseDto&gt; dto = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		for (StoreProduct storeProduct : storeProducts) {</span>
+<span class="fc" id="L69">			ProductNameResponseDto productNameResponseDto = new ProductNameResponseDto();</span>
+<span class="fc" id="L70">			BeanUtils.copyProperties(storeProduct, productNameResponseDto);</span>
+<span class="fc" id="L71">			dto.add(productNameResponseDto);</span>
+
+<span class="fc" id="L73">		}</span>
+
+<span class="fc" id="L75">		return dto;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
