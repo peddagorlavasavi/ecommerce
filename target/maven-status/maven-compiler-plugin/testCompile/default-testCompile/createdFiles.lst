@@ -1,7 +1,6 @@
 com\hcl\ecommerce\service\LoginServiceImplTest.class
 com\hcl\ecommerce\controller\LoginControllerTest.class
 com\hcl\ecommerce\service\StoreServiceImplTest.class
-com\hcl\ecommerce\EcommerceApplicationTests.class
 com\hcl\ecommerce\controller\StoreControllerTest.class
 com\hcl\ecommerce\controller\UserControllerTest.class
 com\hcl\ecommerce\service\StoreReviewServiceImplTest.class
